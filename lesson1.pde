@@ -72,3 +72,23 @@ stroke(156, 87, 91);
 strokeWeight(12);
 arc(300, 430, 80, 25, -PI, 0, OPEN);
 arc(300, 430, 80, 45, 0, PI, OPEN);
+
+//hair
+fill(0, 0, 0);
+noStroke();
+ellipse(300, 220, 130, 40);
+
+//beard - left
+stroke(0, 0, 0);
+strokeWeight(5);
+arc(210, 480, 180, 50, radians(-90), radians(20), OPEN);
+arc(300, 350, 275, 305, radians(90), radians(90 + 45), OPEN);
+noStroke();
+quad(300, 504, 300, 480, 200, 450, 225, 480);
+//beard - right
+stroke(0, 0, 0);
+strokeWeight(5);
+arc(390, 480, 180, 50, radians(160), radians(270), OPEN);
+arc(300, 350, 275, 305, radians(45), radians(90), OPEN);
+noStroke();
+quad(300, 504, 300, 480, 400, 450, 375, 480);
