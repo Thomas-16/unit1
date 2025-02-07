@@ -11,6 +11,8 @@
 
 color c1,c2,c3, backgroundColor, backgroundColor2, backgroundColor3, c5;
 int groundLevel = 460;
+PGraphics pg;
+PGraphics pg2;
 
 color[] robotColors = {
   color(61, 61, 61),    
@@ -21,6 +23,8 @@ color[] robotColors = {
 
 void setup() {
   size(960, 720);
+  pg = createGraphics(width, height);
+  pg2 = createGraphics(width, height);
   
   c1 = color(204, 88, 3);
   c2 = color(226, 113, 29);
@@ -44,22 +48,29 @@ void draw() {
   fill(backgroundColor3);
   triangle(0, 0, 210, 0, 0, 210);
   
-  int sunPosX = 850;
-  int sunPosY = 338;
+  int sunX = 850;
+  int sunY = 338;
   int sunRadius = 100;
   // sun gradient
-  drawGradient(sunPosX, sunPosY, sunRadius, 600, color(300, 251, 153), backgroundColor, 300);
+  drawCircleGradient(sunX, sunY, sunRadius, 600, color(300, 251, 153), backgroundColor, 150);
   
   // sun
   fill(255, 253, 201);
   noStroke();
-  circle(sunPosX, sunPosY, sunRadius);
+  circle(sunX, sunY, sunRadius);
   
-  // land
+  // ground
   fill(c1);
   quad(0, groundLevel, 960, groundLevel, 960, 720, 0, 720);
+  //drawVerticalRectGradient(groundLevel, 720, color(237, 131, 52), c1);
   
   // mountains
+  noStroke();
+  fill(c2);
+  triangle(410-30, 340, 390-30, groundLevel, 250-30, groundLevel);
+  fill(c3);
+  triangle(410-30, 340, 390-30, groundLevel, 480-30, groundLevel);
+  
   fill(c2);
   triangle(250, 250, 210, groundLevel, 30, groundLevel);
   fill(c3);
@@ -70,13 +81,27 @@ void draw() {
   fill(c3);
   triangle(645, 215, 620, groundLevel, 800, groundLevel);
   
+  // cloud shadows
+  pg2.beginDraw();
+  pg2.noStroke();
+  pg2.fill(300 * 0.1, 251 * 0.1, 153 * 0.1, 69);
+  pg2.ellipse(170+80-2, 100+30+3, 80, 40);
+  pg2.ellipse(140+80-2, 100+30+3, 90, 60);
+  pg2.ellipse(90+80-2, 115+30+3, 70, 35);
+  
+  pg2.ellipse(480-2, 130+3, 100, 80);
+  pg2.ellipse(440-2, 155+3, 90, 55);
+  pg2.ellipse(520-2, 140+3, 100, 60);
+  pg2.endDraw();
+  pg2.filter(BLUR, 2);
+  image(pg2, 0, 0);
+  
   // clouds
-  fill(300 * 0.95, 251 * 0.95, 153 * 0.95, 255);
+  fill(300 * 0.8, 251 * 0.8, 153 * 0.8, 255);
   ellipse(170+80, 100+30, 80, 40);
   ellipse(140+80, 100+30, 90, 60);
   ellipse(90+80, 115+30, 70, 35);
   
-  fill(300 * 0.95, 251 * 0.95, 153 * 0.95, 255);
   ellipse(480, 130, 100, 80);
   ellipse(440, 155, 90, 55);
   ellipse(520, 140, 100, 60);
@@ -84,6 +109,25 @@ void draw() {
   // robot
   int robotX = 250;
   int robotY = 500;
+  
+  // Shadow
+  float shadowX = robotX - 20;
+  float shadowY = robotY + 40;
+  
+  pg.beginDraw();
+  pg.noStroke();
+  pg.fill(0, 0, 0, 70); 
+  pg.shearY(-0.13);
+  pg.ellipse(shadowX-23, shadowY + 53, 155, 30);
+  pg.shearY(0.1);
+  pg.filter(BLUR, 2);
+  pg.ellipse(shadowX+5, shadowY + 26, 30, 20);
+  pg.ellipse(shadowX+33, shadowY + 26, 30, 20);
+  pg.filter(BLUR, 2);
+  pg.endDraw();
+  
+  image(pg, 0, 0);
+  
   
   // robot body
   fill(robotColors[0]);
@@ -100,14 +144,33 @@ void draw() {
   fill(0);
   ellipse(robotX - 10, robotY - 110, 8, 8);
   ellipse(robotX + 10, robotY - 110, 8, 8);
-  fill(robotColors[2]);
-  ellipse(robotX - 11, robotY - 112, 3, 3); // lens flare
+  fill(255, 255, 255);
+  ellipse(robotX - 11, robotY - 112, 3, 3); // flare
+  
+  // arms
+  noStroke();
+  fill(robotColors[0]);
+  rect(robotX - 50, robotY - 70, 20, 60, 5); 
+  rect(robotX + 30, robotY - 70, 20, 60, 5);
+  // shoulders
+  fill(robotColors[1]);
+  rect(robotX - 50, robotY - 70, 20, 15, 3); 
+  rect(robotX + 30, robotY - 70, 20, 15, 3);
+  
+  // legs
+  fill(robotColors[1]);
+  rect(robotX - 25, robotY, 20, 60, 5);
+  rect(robotX + 5, robotY, 20, 60, 5); 
+  fill(robotColors[3]);
+  rect(robotX - 25, robotY + 20, 20, 10, 2); 
+  rect(robotX + 5, robotY + 20, 20, 10, 2); 
+  
+  
   
 }
 
 
-
-void drawGradient(int x, int y, float r1, float r2, color c1, color c2, int numSteps) {
+void drawCircleGradient(int x, int y, float r1, float r2, color c1, color c2, int numSteps) {
   noStroke();
   float width = r2 - r1;
   float deltaR = (r2 - r1) / numSteps;
