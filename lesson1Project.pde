@@ -70,7 +70,7 @@ void draw() {
   for (int i = 0; i < 100; i++) {
     float x = random(width);
     float y = random(groundLevel, height);
-    float s = random(3, 12);
+    float s = random(5, 13);
     ellipse(x, y, s, s*random(0.7, 1));
   }
   
