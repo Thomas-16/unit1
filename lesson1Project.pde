@@ -64,6 +64,16 @@ void draw() {
   quad(0, groundLevel, 960, groundLevel, 960, 720, 0, 720);
   //drawVerticalRectGradient(groundLevel, 720, color(237, 131, 52), c1);
   
+  // pebbles
+  fill(160, 82, 45);
+  noStroke();
+  for (int i = 0; i < 100; i++) {
+    float x = random(width);
+    float y = random(groundLevel, height);
+    float s = random(3, 12);
+    ellipse(x, y, s, s*random(0.7, 1));
+  }
+  
   // mountains
   noStroke();
   fill(c2);
@@ -166,9 +176,7 @@ void draw() {
   rect(robotX + 5, robotY + 20, 20, 10, 2); 
   
   
-  
 }
-
 
 void drawCircleGradient(int x, int y, float r1, float r2, color c1, color c2, int numSteps) {
   noStroke();
