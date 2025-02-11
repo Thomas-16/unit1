@@ -172,22 +172,22 @@ void draw() {
   
   
 }
-void drawCactus(int cactusX, int cactusY, PGraphics cactusPG) {
+void drawCactus(int cactusX, int cactusY, PGraphics shadowPG) {
   int stemWidth = 20;
   int stemHeight = 100;
   int armWidth  = 15;
   int armHeight = 40;
   int armYOffset = 30; 
   
-  cactusPG.beginDraw();
-  cactusPG.noStroke();
-  cactusPG.fill(0, 0, 0, 70); 
-  cactusPG.shearY(-0.05);
-  cactusPG.ellipse(cactusX + 10, cactusY + 40, 40, 20);
-  cactusPG.filter(BLUR, 2);
-  cactusPG.endDraw();
+  shadowPG.beginDraw();
+  shadowPG.noStroke();
+  shadowPG.fill(0, 0, 0, 70); 
+  shadowPG.shearY(-0.05);
+  shadowPG.ellipse(cactusX + 10, cactusY + 40, 40, 20);
+  shadowPG.filter(BLUR, 2);
+  shadowPG.endDraw();
   
-  image(cactusPG, 0, 0);
+  image(shadowPG, 0, 0);
   
   noStroke();
   fill(34, 139, 34);  
