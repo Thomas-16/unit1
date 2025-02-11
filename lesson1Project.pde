@@ -1,18 +1,7 @@
-// Thomas Fang
-// Block 2-4
-// February 3, 2025
-
-
-// COLOR PALETTE:
-// https://coolors.co/palette/cc5803-e2711d-ff9505-ffb627-ffc971
-
-// TODO: ADD MORE COLOURS TO PALETTE AND MAKE LAND A BIT DARKER AND SUN BRIGHTER
-
 
 color c1,c2,c3, backgroundColor, backgroundColor2, backgroundColor3, c5;
 int groundLevel = 460;
-PGraphics pg;
-PGraphics pg2;
+PGraphics pg, pg2, pg3;
 
 color[] robotColors = {
   color(61, 61, 61),    
@@ -25,6 +14,7 @@ void setup() {
   size(960, 720);
   pg = createGraphics(width, height);
   pg2 = createGraphics(width, height);
+  pg3 = createGraphics(width, height);
   
   c1 = color(204, 88, 3);
   c2 = color(226, 113, 29);
@@ -90,6 +80,40 @@ void draw() {
   triangle(645, 215, 620, groundLevel, 320, groundLevel);
   fill(c3);
   triangle(645, 215, 620, groundLevel, 800, groundLevel);
+  
+  // cactus
+  int cactusX = 700;
+  int cactusY = groundLevel + 20;
+  int stemWidth = 20;
+  int stemHeight = 100;
+  int armWidth  = 15;
+  int armHeight = 40;
+  int armYOffset = 30; 
+  
+  pg3.beginDraw();
+  pg3.noStroke();
+  pg3.fill(0, 0, 0, 70); 
+  pg3.shearY(-0.05);
+  pg3.ellipse(cactusX + 10, cactusY + 40, 40, 20);
+  pg3.filter(BLUR, 2);
+  pg3.endDraw();
+  
+  image(pg3, 0, 0);
+  
+  noStroke();
+  fill(34, 139, 34);  
+  rect(cactusX, cactusY - stemHeight, stemWidth, stemHeight, 5);
+  
+  fill(50, 205, 50, 180);  
+  rect(cactusX + stemWidth - 5, cactusY - stemHeight, 5, stemHeight);
+  
+  fill(34, 139, 34);
+  rect(cactusX - armWidth, cactusY - armYOffset - armHeight, armWidth, armHeight, 5);
+  rect(cactusX + stemWidth, cactusY - armYOffset - armHeight + 10, armWidth, armHeight, 5);
+  
+  fill(255, 105, 180); 
+  ellipse(cactusX - armWidth/2, cactusY - armYOffset - armHeight, 6, 6);
+  ellipse(cactusX + stemWidth + armWidth/2, cactusY - armYOffset - armHeight + 10, 6, 6);
   
   // cloud shadows
   pg2.beginDraw();
